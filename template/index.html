@@ -2,18 +2,27 @@
 <html>
 <head>
     <title>Audio Player</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Browser Audio Player</h1>
+   <div class="container">
+        <div class="header">
+            <h1>Audio Player</h1>
+        </div>
+        
+        <div class="audio-container">
+            <audio id="audio" controls>
+                <source src="/static/audio/audio1.mp3" type="audio/mp3">
+            </audio>
 
-    <audio id="audio" controls>
-        <source src="/static/audio/audio1.mp3" type="audio/mpeg">
-    </audio>
-
-    <button id="play">Play</button>
-    <button id="pause">Pause</button>
-    <button id="next">Next</button>
-    <button id="prev">Previous</button>
+            <div class="controls">
+                <button id="prev" class="control-button">&#9198;</button>
+                <button id="play" class="control-button">&#9654;</button>
+                <button id="pause" class="control-button">&#9209;</button>
+                <button id="next" class="control-button">&#9197;</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         const audio = document.getElementById('audio');
