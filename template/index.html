@@ -5,57 +5,80 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-   <div class="container">
-        <div class="header">
-            <h1>Audio Player</h1>
-        </div>
-        
-        <div class="audio-container">
-            <audio id="audio" controls>
-                <source src="/static/audio/audio1.mp3" type="audio/mp3">
-            </audio>
-
-            <div class="controls">
-                <button id="prev" class="control-button">&#9198;</button>
-                <button id="play" class="control-button">&#9654;</button>
-                <button id="pause" class="control-button">&#9209;</button>
-                <button id="next" class="control-button">&#9197;</button>
-            </div>
-        </div>
+    <h1>Browser Audio Player</h1>
+    <audio id="audio" controls>
+        <source src="{{ url_for('serve_audio', filename='song1.mp3') }}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <div class="controls">
+        <button id="shuffle">Shuffle</button>
+        <button id="previous">Previous</button>
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <button id="next">Next</button>
     </div>
-
+    
+    <div id="current-track">
+        Now Playing: <span id="current-track-name">song1.mp3</span>
+    </div>
+  
     <script>
         const audio = document.getElementById('audio');
         const playButton = document.getElementById('play');
         const pauseButton = document.getElementById('pause');
         const nextButton = document.getElementById('next');
-        const prevButton = document.getElementById('prev');
+        const previousButton = document.getElementById('previous');
+        const shuffleButton = document.getElementById('shuffle');
+        const currentTrackName = document.getElementById('current-track-name');
         
-        const audioFiles = ['audio1.mp3', 'audio2.mp3', 'audio3.mp3'];
-        let currentAudioIndex = 0;
-
+        function sendRequest(action) {
+            fetch(`/${action}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        if (action === 'play') {
+                            audio.play();
+                        } else if (action === 'pause') {
+                            audio.pause();
+                        } else if (action === 'next') {
+                            audio.src = `{{ url_for('serve_audio', filename='') }}${data.audio}`;
+                            audio.play();
+                            currentTrackName.textContent = data.audio;
+                        } else if (action === 'previous') {
+                            audio.src = `{{ url_for('serve_audio', filename='') }}${data.audio}`;
+                            audio.play();
+                            currentTrackName.textContent = data.audio;
+                        }
+                    }
+                });
+        }
+        
         playButton.addEventListener('click', () => {
-            audio.play();
+            sendRequest('play');
         });
 
         pauseButton.addEventListener('click', () => {
-            audio.pause();
+            sendRequest('pause');
         });
 
         nextButton.addEventListener('click', () => {
-            currentAudioIndex = (currentAudioIndex + 1) % audioFiles.length;
-            audio.src = `/static/audio/${audioFiles[currentAudioIndex]}`;
-            audio.load();
-            audio.play();
+            sendRequest('next');
         });
 
-        prevButton.addEventListener('click', () => {
-            currentAudioIndex = (currentAudioIndex - 1 + audioFiles.length) % audioFiles.length;
-            audio.src = `/static/audio/${audioFiles[currentAudioIndex]}`;
-            audio.load();
-            audio.play();
+        previousButton.addEventListener('click', () => {
+            sendRequest('previous');
         });
+
+        shuffleButton.addEventListener('click', () => {
+            sendRequest('shuffle');
+        });
+        
+        audio.addEventListener('ended', () => {
+            sendRequest('next'); 
+        });
+        
     </script>
+    
 </body>
 </html>
 

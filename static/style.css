@@ -1,57 +1,73 @@
-/* styles.css */
+/* Apply basic styles to the body */
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
     background-color: #f0f0f0;
+    text-align: center;
+    padding: 20px;
     margin: 0;
-    padding: 0;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
-
-.header {
-    margin-top: 20px;
-    font-size: 24px;
-    color: #3498db;
-}
-
-.audio-container {
-    width: 300px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
+/* Style the audio player container */
 audio {
     width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
 }
 
+/* Style the controls container */
 .controls {
     display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
-.control-button {
-    background-color: #3498db;
+/* Style the control buttons */
+.controls button {
+    background-color: #4CAF50;
     color: #fff;
     border: none;
-    border-radius: 50%;
-    padding: 10px;
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
+    padding: 10px 20px;
+    margin: 5px;
     cursor: pointer;
+    border-radius: 4px;
     transition: background-color 0.3s;
 }
 
-.control-button:hover {
-    background-color: #258cd1;
+/* Style the control buttons on hover */
+.controls button:hover {
+    background-color: #45a049;
+}
+
+/* Style the current track display */
+#current-track {
+    margin: 20px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Style the shuffle button */
+#shuffle {
+    background-color: #4286f4;
+}
+
+/* Style the play button */
+#play {
+    background-color: #4286f4;
+}
+
+/* Style the pause button */
+#pause {
+    background-color: #4286f4;
+}
+
+/* Style the previous button */
+#previous {
+    background-color: #4286f4;
+}
+
+/* Style the next button */
+#next {
+    background-color: #4286f4;
 }
 
